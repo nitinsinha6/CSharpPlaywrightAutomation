@@ -1,0 +1,97 @@
+name: C# Playwright BDD CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: csharp-playwright-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test on ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser:
+          - chromium
+          - firefox
+          - webkit
+
+    env:
+      APP_BASE_URL: https://mock-store.local
+      API_BASE_URL: https://jsonplaceholder.typicode.com
+      BROWSER: ${{ matrix.browser }}
+      HEADLESS: "true"
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Install Playwright browsers
+        run: pwsh bin/Release/net8.0/playwright.ps1 install --with-deps ${{ matrix.browser }}
+
+      - name: Run tests
+        id: test
+        continue-on-error: true
+        run: |
+          mkdir -p reports
+          dotnet test \
+            --configuration Release \
+            --no-build \
+            --logger "trx;LogFileName=test-results-${{ matrix.browser }}.trx" \
+            --results-directory reports
+
+      - name: Add job summary
+        if: always()
+        run: |
+          echo "## C# Playwright Test Metrics: ${{ matrix.browser }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Test status: ${{ steps.test.outcome }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- TRX report: reports/test-results-${{ matrix.browser }}.trx" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Playwright artifacts: reports/playwright/" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload test reports and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: csharp-playwright-reports-${{ matrix.browser }}
+          path: |
+            reports/
+            TestResults/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Fail job when tests fail
+        if: always()
+        run: |
+          if [ "${{ steps.test.outcome }}" != "success" ]; then
+            echo "Tests failed. Download the workflow artifacts for TRX reports, screenshots, videos, and traces."
+            exit 1
+          fi
+
