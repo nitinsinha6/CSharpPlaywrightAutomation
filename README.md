@@ -2,6 +2,17 @@
 
 Scalable C#/.NET automation framework using Playwright, NUnit, and Reqnroll for Cucumber-style BDD tests.
 
+## Project Report
+
+A visual project report is available in:
+
+```text
+docs/ProjectReport.html
+docs/ProjectReport.md
+```
+
+Open `docs/ProjectReport.html` in a browser for a stakeholder-friendly summary of the tech stack, architecture, CI/CD, and high-level test coverage.
+
 ## What It Covers
 
 - Amazon-like mock shopping store.
@@ -109,4 +120,3 @@ The pipeline:
 - Runs tests across Chromium, Firefox, and WebKit.
 - Uploads TRX reports and Playwright artifacts.
 - Shows pass/fail status in GitHub Actions.
-

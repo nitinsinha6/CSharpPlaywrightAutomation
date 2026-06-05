@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C# Playwright Automation Framework Report</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5d6d7e;
+      --line: #d6dbdf;
+      --paper: #ffffff;
+      --soft: #f4f6f7;
+      --navy: #16213e;
+      --teal: #0e7c86;
+      --gold: #f4b942;
+      --green: #168a55;
+      --red: #b23b3b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #eef2f5;
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(22,33,62,.96), rgba(14,124,134,.9)),
+        radial-gradient(circle at 85% 10%, rgba(244,185,66,.35), transparent 32%);
+      color: white;
+      padding: 54px 44px;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: 13px;
+      color: #d6f4f2;
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-size: 42px;
+      line-height: 1.08;
+      margin: 0 0 16px;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      font-size: 18px;
+      color: #edf7f8;
+      margin: 0;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: -28px auto 50px;
+      padding: 0 24px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .metric, .card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 10px 28px rgba(23,32,42,.08);
+    }
+
+    .metric {
+      padding: 18px;
+      min-height: 110px;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      padding: 24px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin: 0 0 14px;
+      color: var(--navy);
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 18px 0 8px;
+    }
+
+    p { margin: 0 0 12px; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .pill {
+      border: 1px solid #b8dfe2;
+      background: #ebf8f9;
+      color: #095b62;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 8px;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--navy);
+      background: var(--soft);
+      font-weight: 700;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .step {
+      background: #f8fbfc;
+      border: 1px solid #c9dce0;
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 82px;
+      font-size: 13px;
+    }
+
+    .step strong {
+      display: block;
+      color: var(--teal);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .arch-box {
+      border: 1px solid #ccd6dd;
+      background: #fbfcfd;
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .arch-box strong {
+      color: var(--navy);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    code {
+      background: #eef3f5;
+      border: 1px solid #d8e1e5;
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .status-good { color: var(--green); font-weight: 700; }
+    .status-risk { color: var(--red); font-weight: 700; }
+
+    .footer {
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .metrics, .grid, .architecture, .flow {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { font-size: 32px; }
+      .hero { padding: 38px 24px; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Automation Framework Report</p>
+      <h1>C# Playwright BDD Automation Framework</h1>
+      <p class="subtitle">A scalable test automation repository for an Amazon-like shopping experience, combining Playwright browser automation, Reqnroll Cucumber BDD, NUnit assertions, API testing, and GitHub Actions CI/CD.</p>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="metrics">
+      <div class="metric">
+        <div class="metric-label">Primary Stack</div>
+        <div class="metric-value">C# / .NET 8</div>
+        <div class="metric-note">Strongly typed automation framework</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Browser Coverage</div>
+        <div class="metric-value">3</div>
+        <div class="metric-note">Chromium, Firefox, WebKit</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Test Style</div>
+        <div class="metric-value">BDD</div>
+        <div class="metric-note">Reqnroll + Gherkin scenarios</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">CI/CD</div>
+        <div class="metric-value">GitHub Actions</div>
+        <div class="metric-note">Build, test, artifacts</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Repository Purpose</h2>
+        <p>This repo validates a realistic e-commerce flow from login through order confirmation. It uses a controlled mock storefront at <code>https://mock-store.local</code>, fulfilled by Playwright request routing.</p>
+        <p>The mock store avoids public Amazon bot blocking while preserving the structure of a real shopping experience: header navigation, product search, cart, checkout, payment, and confirmation.</p>
+      </div>
+
+      <div class="card">
+        <h2>Tech Stack</h2>
+        <div class="pill-row">
+          <span class="pill">C#</span>
+          <span class="pill">.NET 8</span>
+          <span class="pill">Microsoft Playwright</span>
+          <span class="pill">Reqnroll</span>
+          <span class="pill">NUnit</span>
+          <span class="pill">Gherkin</span>
+          <span class="pill">GitHub Actions</span>
+          <span class="pill">TRX Reports</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Architecture</h2>
+      <div class="architecture">
+        <div class="arch-box">
+          <strong>Feature Layer</strong>
+          Gherkin files describe behavior using business-readable scenarios and tags such as <code>@smoke</code>, <code>@checkout</code>, and <code>@api</code>.
+        </div>
+        <div class="arch-box">
+          <strong>Step Layer</strong>
+          Reqnroll step definitions map BDD language to reusable C# actions and assertions.
+        </div>
+        <div class="arch-box">
+          <strong>Page Object Layer</strong>
+          Page classes encapsulate selectors and UI behavior for login, search, product, cart, checkout, payment, and confirmation pages.
+        </div>
+        <div class="arch-box">
+          <strong>Support Layer</strong>
+          Hooks create Playwright browser contexts, API contexts, tracing, screenshots, videos, and runtime configuration.
+        </div>
+        <div class="arch-box">
+          <strong>Mock Store</strong>
+          The mock storefront is generated in C# and routed through Playwright for deterministic browser tests.
+        </div>
+        <div class="arch-box">
+          <strong>CI/CD Layer</strong>
+          GitHub Actions runs cross-browser tests and uploads TRX reports plus Playwright failure evidence.
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>End-to-End Shopping Flow</h2>
+      <div class="flow">
+        <div class="step"><strong>1. Login</strong>Email and password entry.</div>
+        <div class="step"><strong>2. Search</strong>Find products by keyword.</div>
+        <div class="step"><strong>3. Product</strong>Validate detail, price, stock.</div>
+        <div class="step"><strong>4. Cart</strong>Add product and check subtotal.</div>
+        <div class="step"><strong>5. Checkout</strong>Submit shipping address.</div>
+        <div class="step"><strong>6. Payment</strong>Enter test card data.</div>
+        <div class="step"><strong>7. Thank You</strong>Verify order confirmation.</div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>High-Level Test Cases</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Area</th>
+              <th>Coverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Authentication</td><td>Login fields and successful sign-in.</td></tr>
+            <tr><td>Navigation</td><td>Header links, sign-in route, empty cart, continue shopping.</td></tr>
+            <tr><td>Search</td><td>Keyword search, multiple categories, empty search validation.</td></tr>
+            <tr><td>Product Detail</td><td>Open first result, price, availability.</td></tr>
+            <tr><td>Cart</td><td>Add to cart, validate cart line item and subtotal.</td></tr>
+            <tr><td>Checkout</td><td>Proceed from cart, Buy Now, shipping form.</td></tr>
+            <tr><td>Payment</td><td>Card form and place order action.</td></tr>
+            <tr><td>Order</td><td>Thank-you page, confirmation number, email message.</td></tr>
+            <tr><td>API</td><td>Get product by ID and create product checks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Feature Inventory</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Tags</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>Authentication.feature</code></td><td>@ui @login @regression</td></tr>
+            <tr><td><code>ProductSearch.feature</code></td><td>@ui @search @smoke</td></tr>
+            <tr><td><code>Navigation.feature</code></td><td>@ui @navigation @regression</td></tr>
+            <tr><td><code>CartCheckout.feature</code></td><td>@ui @cart @checkout @regression</td></tr>
+            <tr><td><code>OrderConfirmation.feature</code></td><td>@ui @order @regression</td></tr>
+            <tr><td><code>ProductsApi.feature</code></td><td>@api @smoke</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>CI/CD And Reporting</h2>
+      <p>The workflow at <code>.github/workflows/dotnet-playwright-ci.yml</code> runs on push, pull request, and manual trigger.</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Stage</th>
+            <th>What Happens</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Restore</td><td>NuGet packages are restored.</td><td>Dependency cache-ready build.</td></tr>
+          <tr><td>Build</td><td>.NET project compiles in Release mode.</td><td>Compiled test assembly.</td></tr>
+          <tr><td>Install Browsers</td><td>Playwright installs Chromium, Firefox, or WebKit.</td><td>Browser runtime.</td></tr>
+          <tr><td>Test Matrix</td><td>Tests run against each browser.</td><td class="status-good">Pass/fail by browser.</td></tr>
+          <tr><td>Artifacts</td><td>Reports and evidence are uploaded.</td><td>TRX, screenshots, videos, traces.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>Run Locally</h2>
+        <p><code>dotnet restore</code></p>
+        <p><code>dotnet build</code></p>
+        <p><code>pwsh bin/Debug/net8.0/playwright.ps1 install</code></p>
+        <p><code>dotnet test</code></p>
+      </div>
+
+      <div class="card">
+        <h2>Current Local Limitation</h2>
+        <p class="status-risk">The current machine does not have the .NET SDK installed, so local build/test execution was not possible here.</p>
+        <p>GitHub Actions is configured to install .NET 8 and run the framework in CI.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    C# Playwright BDD Automation Framework Report
+  </footer>
+</body>
+</html>
+
